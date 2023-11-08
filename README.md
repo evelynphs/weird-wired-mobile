@@ -52,3 +52,167 @@ Berikut beberapa perbedaan antara _stateless_ dan _stateful_ widget:
 
 ## Langkah-langkah pengerjaan
 
+1. Lewat command prompt, masuk ke direktori tempat menyimpan project flutter yang akan dibuat. Kemudian, jalankan perintah `flutter create weird_wired` pada cmd untuk menginisiasi project flutter baru sesuai nama project yang diinginkan. Kemudian coba menjalankan `flutter run` untuk memeriksa apakah demo project dapat berjalan dengan baik.
+
+2. Masuk ke dalam direktori project, kemudian buka direktori weird_wired/lib. Masuk ke file `main.dart`, kemudian ubah isinya menjadi sebagai berikut:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:weird_wired/menu.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan.shade300),
+        useMaterial3: true,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+```
+
+   Pada `main.dart` ini, dibuat sebuah widget bernama MyApp yang merupakan stateless widget. Di dalam MyApp, dibuat sebuah design material untuk aplikasi ini menggunakan widget MateralApp.
+
+2. Buat sebuah file baru dalam weird_wired/lib bernama `menu.dart`. Kemudian di dalamnya, isi dengan kode berikut:
+
+```dart
+import 'package:flutter/material.dart';
+
+class MyHomePage extends StatelessWidget {
+  MyHomePage({Key? key}) : super(key: key);
+
+  @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Inventory List',
+        ),
+      ),
+      body: SingleChildScrollView(
+        // Widget wrapper yang dapat discroll
+        child: Padding(
+          padding: const EdgeInsets.all(10.0), // Set padding dari halaman
+          child: Column(
+            // Widget untuk menampilkan children secara vertikal
+            children: <Widget>[
+              const Padding(
+                padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                // Widget Text untuk menampilkan tulisan dengan alignment center dan style yang sesuai
+                child: Text(
+                  'WeirdWired', // Text yang menandakan inventory
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              // Grid layout
+              GridView.count(
+                // Container pada card kita.
+                primary: true,
+                padding: const EdgeInsets.all(20),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                crossAxisCount: 3,
+                shrinkWrap: true,
+                children: items.map((InventoryItem item) {
+                  // Iterasi untuk setiap item
+                  return InventoryCard(item);
+                }).toList(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    }
+}
+```
+
+   Pada kode tersebut, dibuat sebuah stateless widget baru bernama MyHomePage sebagai tampilan home page dari aplikasi ini. Layout pada MyHomePage diatur menggunakan widget scaffold. Pada grid view dalam widget tersebut, akan ada widget InventoryCards yang menampilkan cards berdasarkan item yang ada pada InventoryItem. Class InventoryItem dan InventoryClass akan dibuat pada langkah selanjutnya.
+
+3. Pada `menu.dart`, buat sebuah class bernama InventoryItem untuk menyimpan cards yang ingin ditampilkan nantinya.
+
+```dart
+class InventoryItem {
+  final String name;
+  final IconData icon;
+
+  InventoryItem(this.name, this.icon);
+}
+```
+
+   Setelah itu, buat sebuah stateless widget baru bernama InventoryCard untuk menampilkan masing-masing card yang ada pada InventoryItem.
+
+```dart
+class InventoryCard extends StatelessWidget {
+  final InventoryItem item;
+
+  const InventoryCard(this.item, {super.key}); // Constructor
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.cyan.shade300,
+      child: InkWell(
+        // Area responsive terhadap sentuhan
+        onTap: () {
+          // Memunculkan SnackBar ketika diklik
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+                content: Text("Kamu telah menekan tombol ${item.name}!")));
+        },
+        child: Container(
+          // Container untuk menyimpan Icon dan Text
+          padding: const EdgeInsets.all(8),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  item.icon,
+                  color: Colors.white,
+                  size: 30.0,
+                ),
+                const Padding(padding: EdgeInsets.all(3)),
+                Text(
+                  item.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+   Pada widget tersebut, di bagian onTap, terdapat SnackBar yang akan mengeluarkan message tertentu sesuai dengan card yang di-tap.
+
+4. Pada widget MyHomePage, tambahkan sebuah list yang berisi cards yang ingin ditampilkan dengan menambahkan kode berikut setelah `MyHomePage({Key? key}) : super(key: key);` :
+
+```dart
+final List<InventoryItem> items = [
+    InventoryItem("Lihat Item", Icons.checklist),
+    InventoryItem("Tambah Item", Icons.backpack),
+    InventoryItem("Logout", Icons.logout),
+];
+```
+   Setiap cards dalam list tersebut nantinya akan ditampilkan pada widget InventoryCard.
+

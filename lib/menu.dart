@@ -4,9 +4,9 @@ class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
 
   final List<InventoryItem> items = [
-    InventoryItem("Lihat Item", Icons.checklist),
-    InventoryItem("Tambah Item", Icons.backpack),
-    InventoryItem("Logout", Icons.logout),
+    InventoryItem("Lihat Item", Icons.checklist, Colors.cyan.shade300),
+    InventoryItem("Tambah Item", Icons.backpack, Colors.tealAccent.shade700),
+    InventoryItem("Logout", Icons.logout, Colors.blueAccent),
 ];
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -70,8 +70,9 @@ class MyHomePage extends StatelessWidget {
 class InventoryItem {
   final String name;
   final IconData icon;
+  final Color color;
 
-  InventoryItem(this.name, this.icon);
+  InventoryItem(this.name, this.icon, this.color);
 }
 
 class InventoryCard extends StatelessWidget {
@@ -82,7 +83,7 @@ class InventoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.cyan.shade300,
+      color: item.color,
       child: InkWell(
         // Area responsive terhadap sentuhan
         onTap: () {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:weird_wired/widgets/left_drawer.dart';
+import 'package:weird_wired/inventory_form.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -17,6 +19,8 @@ class MyHomePage extends StatelessWidget {
           'Inventory List',
         ),
       ),
+      // Masukkan drawer
+      drawer: const LeftDrawer(),
       body: SingleChildScrollView(
         // Widget wrapper yang dapat discroll
         child: Padding(
@@ -83,6 +87,10 @@ class InventoryCard extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
                 content: Text("Kamu telah menekan tombol ${item.name}!")));
+
+          if (item.name == "Tambah Item") {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const InventoryFormPage()));
+          }
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text

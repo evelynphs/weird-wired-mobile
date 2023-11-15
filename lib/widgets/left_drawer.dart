@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weird_wired/menu.dart';
-import 'package:weird_wired/inventory_form.dart';
+import 'package:weird_wired/screens/menu.dart';
+import 'package:weird_wired/screens/inventory_form.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});

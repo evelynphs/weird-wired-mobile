@@ -15,6 +15,10 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+<details>
+<summary>Tugas 7</summary>
+<br>
+
 # Tugas 7
 
 ## Perbedaan antara stateless dan stateful widget
@@ -215,4 +219,55 @@ final List<InventoryItem> items = [
 ];
 ```
    Setiap cards dalam list tersebut nantinya akan ditampilkan pada widget InventoryCard.
+
+</details>
+
+# Tugas 8
+
+## Perbedaan antara `Navigator.push()` dan `Navigator.pushReplacement()`
+
+`Navigator.push()` akan meletakkan atau "menumpuk" suatu _route_ ke dalam _stack route_ tanpa melakukan perubahan apapun pada _route_ yang sudah ada pada _stack route_. Sedangkan `Navigator.pushReplacement()` akan "mengeluarkan" _route_ lama yang ada pada bagian paling atas dari tumpukkan _stack route_, kemudian memasukkan _route_ baru dan menjadikannya _route_ paling atas pada _stack_. Jadi, `Navigator.push()` hanya akan **menambahkan** suatu _route_ baru pada _stack_, sedangkan `Navigator.pushReplacement()` akan **mengganti** _route_ paling atas pada suatu _stack_ dengan _route_ yang baru.
+
+Contoh:
+Misalnya, pada suatu _stack route_, kondisi awal _stack_ adalah sebagai berikut
+
+`stack = [MyHomePage, InventoryHomePage]`
+
+Jika kita berpindah ke halaman ListPage dengan menggunakan perintah **push** seperti berikut
+```dart
+Navigator.push(context, MaterialPageRoute(builder: (context) => const ListPage()));
+```
+maka, kondisi _stack route_ sekarang adalah
+`stack = [MyHomePage, InventoryHomePage, ListPage]`.
+
+Namun, jika kita berpindah halaman ke ListPage menggunakan **pushReplacement** seperti berikut
+```dart
+Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ListPage(),
+                  ));
+```
+maka, kondisi _stack route_ sekarang adalah
+`stack = [MyHomePage, ListPage]`.
+
+## Macam-macam layout widget pada Flutter dan konteks penggunaannya
+
+Beberapa jenis layout pada flutter yang kerap digunakan antara lain:
+
+1. Container: di dalamnya terdapat single child widget. Container digunakan untuk mengatur layout child widget di dalamnya dengan menambahkan margin, padding, border, dan warna background.
+
+2. GridView: untuk mengatur layout child widget di dalamnya sebagai 2D list. 
+
+3. ListView: untuk mengatur layout child widget di dalamnnya dengan format seperti suatu kolom. Apabila konten di dalamnya terlalu besar, maka ListView akan otomatis membuat layoutnya menjadi scrollable. Dapat diatur untuk menampilkan layout secara horizontal maupun vertikal.
+
+4. Stack: untuk _overlap_ suatu widget di atas widget lainnya.
+
+5. Card: digunakan untuk menampilkan sebuah layout berbentuk seperti kartu yang biasanya mengandung beberapa informasi kecil terkait sesuatu. Memiliki single child widget di dalamnya.
+
+6. ListTile: untuk menampilkan suatu layout baris dengan jumlah baris maksimal 3. Biasanya digunakan untuk menampilkan suatu informasi berupa teks dengan icon di sebelahnya.
+
+## Elemen input pada form yang digunakan pada tugas
+
+## Penerapan clean architecture pada aplikasi Flutter
 

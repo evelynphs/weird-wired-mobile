@@ -268,6 +268,20 @@ Beberapa jenis layout pada flutter yang kerap digunakan antara lain:
 6. ListTile: untuk menampilkan suatu layout baris dengan jumlah baris maksimal 3. Biasanya digunakan untuk menampilkan suatu informasi berupa teks dengan icon di sebelahnya.
 
 ## Elemen input pada form yang digunakan pada tugas
+Pada tugas ini, elemen input yang digunakan pada form adalah `TextFormField`, yaitu widget yang menyediakan tempat untuk input berupa teks. Pada project ini, `TextFormField` digunakan untuk mengambil input dari user berupa data nama, jumlah, dan deskripsi suatu Item. Ketiga data tersebut merupakan data berupa teks sehingga pada tugas ini, elemen input yang diperlukan hanya `TextFormField`. 
 
 ## Penerapan clean architecture pada aplikasi Flutter
+_Clean architecture_ merupakan arsitektur suatu sistem yang menggunakan prinsip _separation of concerns_. Arsitektur ini membagi suatu _software_ menjadi beberapa bagian dengan tujuan mempermudah pengembangan dan _maintenance_ untuk _software_ tersebut. Pada flutter, _clean architecture_ dibagi menjadi beberapa _layer_ sebagai berikut:
+
+1. Feature layer atau presentation layer:
+Merupakan bagian dari _software_ yang terdiri dari komponen-komponen _user interface_ (UI) yang akan ditampilkan pada layar seperti widget. Layer ini akan meng-_handle_ interaksi user dengan _software_ dan meng-_handle_ render untuk UI.
+
+2. Domain layer:
+Merupakan layer _business logic_ suatu _software_. Terdiri dari _use cases_ (operasi-operasi yang dapat dilakuikan dalam suatu aplikasi), _entities_(objek dalam aplikasi), dan _repository interface_. Layer ini sepenuhnya terdiri dari program Dart tanpa elemen flutter apapun, tujuannya agar layer ini fokus sepenuhnya pada _business logic_ dari aplikasi.
+
+3. Data layer:
+Merupakan bagian dari aplikasi yang bertugas untuk mengambil dan menyimpan data. Terdiri dari repositori dan sumber data seperti database. Repositori digunakan untuk mengakses dan memanipulasi data, sedangkan database merupakan tempat penyimpanan data itu sendiri.
+
+## Langkah-langkah pengerjaan
+
 

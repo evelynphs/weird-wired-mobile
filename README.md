@@ -253,7 +253,7 @@ maka, kondisi _stack route_ sekarang adalah
 
 ## Macam-macam layout widget pada Flutter dan konteks penggunaannya
 
-Beberapa jenis layout pada flutter yang kerap digunakan antara lain:
+Beberapa jenis layout pada flutter yang biasa/sering digunakan antara lain:
 
 1. Container: di dalamnya terdapat single child widget. Container digunakan untuk mengatur layout child widget di dalamnya dengan menambahkan margin, padding, border, dan warna background.
 
@@ -284,4 +284,275 @@ Merupakan bagian dari aplikasi yang bertugas untuk mengambil dan menyimpan data.
 
 ## Langkah-langkah pengerjaan
 
+### 1. Membuat halaman formulir untuk menambahkan item baru
 
+Pada direktori `weird_wired/lib/screens`, buat sebuah file baru bernama `inventory_form.dart`. Isi file tersebut dengan kode berikut:
+```dart
+import 'package:flutter/material.dart';
+import 'package:weird_wired/widgets/left_drawer.dart';
+
+class InventoryFormPage extends StatefulWidget {
+    const InventoryFormPage({super.key});
+
+    @override
+    State<InventoryFormPage> createState() => _InventoryFormPageState();
+}
+
+class _InventoryFormPageState extends State<InventoryFormPage> {
+    final _formKey = GlobalKey<FormState>();
+
+    String _name = "";
+    int _amount = 0;
+    String _description = "";
+
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+        appBar: AppBar(
+          title: const Center(
+            child: Text(
+              'Form Tambah Item',
+            ),
+          ),
+          backgroundColor: Colors.cyan,
+          foregroundColor: Colors.white,
+        ),
+        // Masukkan drawer
+        drawer: const LeftDrawer(),
+        body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Nama Item",
+                  labelText: "Nama Item",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+                onChanged: (String? value) {
+                  setState(() {
+                    _name = value!;
+                  });
+                },
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Nama tidak boleh kosong!";
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Jumlah",
+                  labelText: "Jumlah",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+                onChanged: (String? value) {
+                  setState(() {
+                    _amount = int.parse(value!);
+                  });
+                },
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Jumlah tidak boleh kosong!";
+                  }
+                  if (int.tryParse(value) == null) {
+                    return "Jumlah harus berupa angka!";
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Deskripsi",
+                  labelText: "Deskripsi",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+                onChanged: (String? value) {
+                  setState(() {
+                    _description = value!;
+                  });
+                },
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Deskripsi tidak boleh kosong!";
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.cyan),
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Item berhasil tersimpan'),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Nama: $_name'),
+                                    Text('Jumlah: $_amount'),
+                                    Text('Deskripsi: $_description'),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      _formKey.currentState!.reset();
+                    }
+                  },
+                  child: const Text(
+                    "Save",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            ],
+          ),
+        ),
+      ),
+      );
+    }
+}
+```
+Di dalam bagian `Scaffold`, terdapat bagian `Form`, dan di dalam `Form` tersebut terdapat komponen `children` yang berisi list widget-widget dari `Form`. Di dalam list tersebut, terdapat tiga buah `Padding` yang di dalamnya terdapat masing-masing satu `TextFormField`. `TextFormField` pertama merupakan kolom input nama item, `TextFormField` kedua merupakan kolom input jumlah item, sedangkan `TextFormField` ketiga merupakan kolom input deskripsi item. Ketiga kolom input tersebut disesuaikan dengan field data pada model `Item` yang ada pada aplikasi Django yang telah dibuat sebelumnya.
+
+Pada setiap `TextFormField`, terdapat validator yang akan memeriksa validasi dari data yang diinput. Validator tersebut akan mengeluarkan _alert_ apabila kolom input nya kosong atau input berisi data yang tidak sesuai dengan tipe data atribut modelnya.
+
+Di akhir form, terdapat juga sebuah child berupa widget `Align` yang memiliki widget `ElevatedButton` di dalamnya, di mana button ini merupakan tombol save. Dalam widget tersebut, terdapat juga fungsi `onPressed` yang akan memunculkan suatu pop-up dialog box apabila tombol save ditekan. Dalam dialog box tersebut, terdapat tiga widget `Text` yang akan memunculkan informasi berupa nama, jumlah, dan deskripsi dari item yang baru saja di save.
+
+### 2. Mengarahkan pengguna ke halaman form tambah item baru ketika menekan tombol Tambah Item pada halaman utama
+
+Pada `menu.dart`, di dalam class `InventoryCard`, terdapat fungsi `onTap()`. Dalam fungsi tersebut, tambahkan routing untuk button bernama "Tambah Item" dengan kode sebagai berikut:
+
+```dart
+...
+onTap: () {
+          // Memunculkan SnackBar ketika diklik
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+                content: Text("Kamu telah menekan tombol ${item.name}!")));
+
+          // Tambahkan kode berikut ini
+          if (item.name == "Tambah Item") {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const InventoryFormPage()));
+          }
+        }
+...
+```
+
+### 3. Membuat sebuah drawer pada aplikasi dengan opsi "Halaman Utama" dan "Tambah Item"
+
+Dalam direktori `weird_wired/lib`, buat sebuah direktori baru bernama `widgets`. Dalam direktori `widgets` tersebut, buat sebuah file baru bernama `left_drawer.dart`. Di dalam file tersebut, tambahkan kode sebagai berikut:
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:weird_wired/screens/menu.dart';
+import 'package:weird_wired/screens/inventory_form.dart';
+
+class LeftDrawer extends StatelessWidget {
+  const LeftDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.cyan,
+            ),
+            child: Column(
+              children: [
+                Text(
+                  'WeirdWired',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                Padding(padding: EdgeInsets.all(10)),
+                Text("Store the items you've collected from The Wired here.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.home_outlined),
+            title: const Text('Halaman Utama'),
+            // Bagian redirection ke MyHomePage
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyHomePage(),
+                  ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.backpack),
+            title: const Text('Tambah Item'),
+            // Bagian redirection ke InventoryFormPage
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InventoryFormPage(),
+                  ));
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+Susunan opsi pada drawer tersebut menggunakan `ListTile`. Pada `ListTile` pertama, terdapat opsi "Halaman Utama" yang di-_route_ ke `MyHomePage()`. Sedangkan pada `ListTile` kedua, terdapat opsi "Tambah Item" yang di-_route_ ke `InventoryFormPage()`. Kedua _routing_ tersebut menggunakan pushReplacement.

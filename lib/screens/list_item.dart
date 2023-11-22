@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:weird_wired/models/item.dart';
 import 'package:weird_wired/widgets/left_drawer.dart';
+import 'package:weird_wired/screens/detail_item.dart';
 
 class ItemPage extends StatefulWidget {
     const ItemPage({Key? key}) : super(key: key);
@@ -60,7 +61,15 @@ Widget build(BuildContext context) {
                 } else {
                     return ListView.builder(
                         itemCount: snapshot.data!.length,
-                        itemBuilder: (_, index) => Container(
+                        itemBuilder: (_, index) => InkWell(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return DetailItemPage(
+                                  item: snapshot.data![index]);
+                            }));
+                          },
+                          child: Container(
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 12),
                                 padding: const EdgeInsets.all(20.0),
@@ -82,7 +91,9 @@ Widget build(BuildContext context) {
                                         "${snapshot.data![index].fields.description}")
                                 ],
                                 ),
-                            ));
+                            )
+                          )    
+                        );
                     }
                 }
             }));

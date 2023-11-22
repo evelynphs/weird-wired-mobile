@@ -556,3 +556,38 @@ class LeftDrawer extends StatelessWidget {
 ```
 
 Susunan opsi pada drawer tersebut menggunakan `ListTile`. Pada `ListTile` pertama, terdapat opsi "Halaman Utama" yang di-_route_ ke `MyHomePage()`. Sedangkan pada `ListTile` kedua, terdapat opsi "Tambah Item" yang di-_route_ ke `InventoryFormPage()`. Kedua _routing_ tersebut menggunakan pushReplacement.
+
+</details>
+
+<details>
+<summary>Tugas 9</summary>
+<br>
+
+# Tugas 9
+
+## Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu?
+Bisa, kita bisa mengambil data JSON dengan cara "parsing", dan hal ini dapat dilakukan tanpa membuat model terlebih dahulu. Namun, hal ini tidak disarankan untuk data dalam jumlah banyak dan project yang lebih kompleks. Pembuatan model disarankan agar representasi data menjadi lebih terstruktur.
+
+## Fungsi dari CookieRequest dan pentingnya pembagian instance CookieRequest ke semua komponen di aplikasi Flutter
+CookieRequest digunakan sebagai akses pada suatu komponen aplikasi untuk meminta HTTP _request_ yang menyertakan cookie. Intace CookieRequest ini penting untuk dibagikan ke seluruh komponen aplikasi untuk menjaga konsistensi data cookie yang dikelola oleh setiap komponen. Hal ini akan mempermudah koordinasi dan pertukaran data cookie antar komponen.
+
+## Mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter
+Data akan diambil menggunakan HTTP request GET, kemudian data akan di-decode menjadi bentuk JSON. Kemudian data berupa JSON tersebut akan dikonversi menjadi bentuk object yang dapat dibaca oleh flutter. Data dari objek tersebut dapat ditampilkan menggunakan widget pada flutter.
+
+## Mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter
+Flutter akan menerima input berupa username dan password dari user. Kemudian, input tersebut akan dikirimkan ke server django yang telah terhubung dengan project flutter tersebut. Input akan dikirimkan ke url yang mengarah pada sistem login atau sistem autentikasi pada srver django. Django kemudian akan melakukan autentikasi atau validasi berdasarkan input username dan password tersebut. Jika autentikasi berhasil, django akan mengirimkan respon sukses pada flutter, dan flutter akan menampilkan menu yang dapat ditampilkan jika user sudah login. Namun, jika autentikasi gagal, django akan mengirimkan respon gagal pada flutter dan menu tersebut tidak akan ditampilkan.
+
+## Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing
+
+1. Provider: untuk menyimpan state dari user.
+
+2. ElevatenButton: untuk membuat suatu button dengan fungsi tertentu yang akan dijalankan ketika button di-klik.
+
+3. TextFormField: untuk menerima input berupa teks dari pengguna.
+
+4. ListTile: untuk menampilkan suatu layout baris dengan jumlah baris maksimal 3. Biasanya digunakan untuk menampilkan suatu informasi berupa teks dengan icon di sebelahnya.
+
+5. Container: di dalamnya terdapat single child widget. Container digunakan untuk mengatur layout child widget di dalamnya dengan menambahkan margin, padding, border, dan warna background.
+
+## Langkah-langkah pengerjaan
+

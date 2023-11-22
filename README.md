@@ -222,6 +222,10 @@ final List<InventoryItem> items = [
 
 </details>
 
+<details>
+<summary>Tugas 8</summary>
+<br>
+
 # Tugas 8
 
 ## Perbedaan antara `Navigator.push()` dan `Navigator.pushReplacement()`
@@ -594,4 +598,4 @@ Flutter akan menerima input berupa username dan password dari user. Kemudian, in
 2. Membuat app authentication pada django project weird_wired dan mengintegrasikannya dengan project flutter ini.
 3. Membuat model flutter berdasarkan data JSON pada django project dengan menggunakan website Quicktype, kemudian mengintegrasikan model tersebut pada project ini.
 4. Membuat halaman list item dan menampilkan data models pada halaman tersebut. 
-5. Membuat halaman detail untuk setiap item, dan menerapkan inkwell pada list item agar tiap data item dapat di-klik dan menampilkan halaman detail item. 
+5. Membuat halaman detail untuk setiap item, dan menerapkan inkwell pada list item agar tiap data item dapat di-klik dan menampilkan halaman detail item.

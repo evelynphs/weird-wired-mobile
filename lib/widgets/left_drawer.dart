@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weird_wired/screens/menu.dart';
 import 'package:weird_wired/screens/inventory_form.dart';
+import 'package:weird_wired/screens/list_item.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -60,6 +61,17 @@ class LeftDrawer extends StatelessWidget {
                     builder: (context) => InventoryFormPage(),
                   ));
             },
+          ),
+          ListTile(
+              leading: const Icon(Icons.list_alt),
+              title: const Text('Daftar Item'),
+              onTap: () {
+                  // Route menu ke halaman produk
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ItemPage()),
+                  );
+              },
           ),
         ],
       ),
